@@ -59,7 +59,7 @@ Email: iampritamdas04@gmail.com
 
 Phone: +91 9883214531
 
-LinkedIn: pritam-das
+LinkedIn: https://www.linkedin.com/in/pritam-das-0a52722b0/
 
 GitHub: itsPritamDas
 
