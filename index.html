@@ -72,16 +72,21 @@
     .hero { text-align: center; padding-top: 120px; }
     .profile-wrapper {
       position: relative;
-      width: 220px;
-      height: 220px;
+      width: 220px; height: 220px;
       margin: 0 auto 20px;
       border-radius: 50%;
       background: conic-gradient(#ff4b5c, #ffcc70, #4facfe, #ff4b5c);
       padding: 5px;
+      box-shadow: 0 0 20px rgba(255,75,92,0.6), 0 0 40px rgba(79,172,254,0.4);
+      animation: glowPulse 3s infinite alternate;
     }
     .profile-wrapper img {
       width: 100%; height: 100%; border-radius: 50%;
       object-fit: cover; border: 5px solid #0f0c29;
+    }
+    @keyframes glowPulse {
+      from { box-shadow: 0 0 20px rgba(255,75,92,0.6), 0 0 40px rgba(79,172,254,0.4); }
+      to   { box-shadow: 0 0 40px rgba(255,75,92,1), 0 0 70px rgba(79,172,254,0.8); }
     }
     .hero h1 { font-size: 42px; color: #ff4b5c; animation: fadeDown 1s ease-out; }
     .hero p { font-size: 18px; margin: 15px 0; animation: fadeUp 1.5s ease-out; }
@@ -187,9 +192,13 @@
         width: 200px;
         border-radius: 8px;
         padding: 15px;
-        display: none;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-in-out;
       }
-      nav ul.show { display: flex; }
+      nav ul.show {
+        max-height: 500px; /* enough to reveal all links */
+      }
       nav ul li { margin: 12px 0; }
       .menu-toggle { display: block; }
     }
@@ -274,14 +283,26 @@
   <!-- Projects -->
   <section id="projects">
     <h2>Featured Project</h2>
+    <br>
     <div class="project-card">
-      <img src="1.png" alt="Face Recognition Based Attendance System">
-      <h3>Face Recognition Based Attendance System</h3>
-      <p>Developed using Python & OpenCV. Captures facial data to automate attendance marking with real-world applications.</p>
-    </div>
+      <img src="KS.png" alt="KRISHAK SATHI ">
+      <h3>Farmer Govt. Aided Schemes-  KRISHAK SATHI </h3>
+      <p>The objective of this project is to create an online platform where farmers can access 
+information about government schemes, crop details, and apply for them easily. The system 
+simplifies the process of applying for schemes, tracking their progress, and provides farmers 
+with updated information about crops, pesticides, and financial resources. The goal is to 
+empower farmers with accurate and timely data to improve agricultural productivity and 
+decision-making.</p><br>
+      <p>Frontend: HTML, CSS, JavaScript </p>
+      <p>Backend & Database: Firebase Authentication, Firestore Database, Firebase Hosting </p>
+      <p>Cloud Deployment: Firebase services for real-time data and authentication </p>
+      <p>Version Control: GitHub repository </p>
+      <br>
+     <a href=" https://itspritamdas.github.io/-Farmer-Government-Aided-Schemes-KRISHAK-SATHI-/"> 👉 Click here to view this project</a>
+    </div><br>
     <br>
      <div class="project-card">
-      <img src="VAG.png" alt="Virtual Art Gallery">
+      <img src="VAG.png" alt="Virtual Art Gallery"><br>
       <h3>Virtual Art Gallery</h3>
       <p>Developed a virtual art gallery website that allows
  users to explore and interact with artworks in a virtual environment. This project will combine
@@ -291,13 +312,43 @@
     </div>
     <br>
     <div class="project-card">
-      <img src="BWP.png" alt="Beats With Pritam">
+      <img src="BWP.png" alt="Beats With Pritam"><br>
       <h3>Music Player</h3>
       <p> develope a web-based music player application using
  HTML, CSS, and JavaScript. The project aims to provide hands-on experience in building a
  user-friendly and interactive music player that can play audio files.</p>
  <br>
  <a href="https://itspritamdas.github.io/Beats-with-Pritam/"> 👉 Click here to view this project</a>
+    </div>
+
+ <br>
+     <div class="project-card">
+      <img src="STBA.png" alt="Student–Teacher Booking Appointment System ">
+      <br>
+      <h3>Guru Vandan</h3>
+      <p>The objective of this project is to design and develop an online appointment booking system 
+where students can book meetings with teachers in a structured and efficient way. The system 
+ensures time management, ease of access, and real-time updates, reducing conflicts and 
+improving communication between students and teachers.</p>
+  <br>
+  <a href="https://itspritamdas.github.io/Guru_Vandan/"> 👉 Click here to view this project</a>
+    </div>
+    <br>
+    <br>
+    <div class="project-card">
+      <img src="CALC.png" alt=" Basic Calculator">
+      <h3> Basic Calculator</h3>
+      <p>The goal of this project is to create a fully functional calculator using web technologies—
+ HTML, CSS, and JavaScript. The calculator performs basic arithmetic operations . This project helps enhance front-end development skills and 
+provides practical experience with JavaScript event handling and error management. </p>
+<a href="https://itspritamdas.github.io/Basic-Calculator/">👉 Click here to view this project</a>
+    </div>
+    <br>
+    <br>
+    <div class="project-card">
+      <img src="1.png" alt="Face Recognition Based Attendance System">
+      <h3>Face Recognition Based Attendance System</h3>
+      <p>Developed using Python & OpenCV. Captures facial data to automate attendance marking with real-world applications.</p>
     </div>
   </section>
 
@@ -345,47 +396,49 @@
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add("visible"); });
     }, { threshold: 0.2 });
-    sections.forEach(s => observer.observe(s));
+    sections.forEach(section => observer.observe(section));
 
-    // Navbar background change on scroll
+    // Navbar scroll effect
     window.addEventListener("scroll", () => {
       const header = document.querySelector("header");
       header.classList.toggle("scrolled", window.scrollY > 50);
     });
 
-    // Active nav link highlight
-    const navLinksAll = document.querySelectorAll("nav ul li a");
+    // Active link highlight
+    const navLinks = document.querySelectorAll("nav ul li a");
     window.addEventListener("scroll", () => {
       let current = "";
       sections.forEach(section => {
-        const sectionTop = section.offsetTop - 120;
+        const sectionTop = section.offsetTop - 70;
         if (pageYOffset >= sectionTop) current = section.getAttribute("id");
       });
-      navLinksAll.forEach(link => {
+      navLinks.forEach(link => {
         link.classList.remove("active");
-        if (link.getAttribute("href").includes(current)) link.classList.add("active");
+        if (link.getAttribute("href") === "#" + current) link.classList.add("active");
+      });
+    });
+
+    // Hamburger menu toggle
+    const menuToggle = document.getElementById("menu-toggle");
+    const navMenu = document.getElementById("nav-links");
+    menuToggle.addEventListener("click", () => {
+      navMenu.classList.toggle("show");
+    });
+
+    // Auto-close navbar when link is clicked (new fix)
+    navLinks.forEach(link => {
+      link.addEventListener("click", () => {
+        if (navMenu.classList.contains("show")) {
+          navMenu.classList.remove("show");
+        }
       });
     });
 
     // Contact form validation
     document.getElementById("contactForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const message = document.getElementById("message").value.trim();
-      if (!name || !email || !message) {
-        alert("Please fill all fields.");
-      } else {
-        alert("Message sent successfully!");
-        this.reset();
-      }
-    });
-
-    // Hamburger toggle
-    const menuToggle = document.getElementById("menu-toggle");
-    const navLinks = document.getElementById("nav-links");
-    menuToggle.addEventListener("click", () => {
-      navLinks.classList.toggle("show");
+      alert("Message sent successfully!");
+      this.reset();
     });
   </script>
 </body>
