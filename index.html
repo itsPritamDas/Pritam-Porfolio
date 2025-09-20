@@ -376,12 +376,20 @@ provides practical experience with JavaScript event handling and error managemen
       <a href="https://www.linkedin.com/in/pritam-das-0a52722b0/" target="_blank">🔗 LinkedIn</a>
       <a href="https://github.com/itsPritamDas" target="_blank">💻 GitHub</a>
     </div>
-    <form id="contactForm">
-      <input type="text" id="name" placeholder="Name" required>
-      <input type="email" id="email" placeholder="Email" required>
-      <textarea id="message" rows="5" placeholder="Message" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
+    
+
+<form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+  <!-- Your Web3Forms Access Key -->
+  <input type="hidden" name="access_key" value="b2111e15-6b03-4c5f-b20d-eefb6498977a">
+  <input type="text" name="name" placeholder="Name" required>
+  <input type="email" name="email" placeholder="Email" required>
+  <textarea name="message" rows="5" placeholder="Message" required></textarea>
+  <button type="submit">Send Message</button>
+</form>
+
+
+
+
   </section>
 
   <!-- Footer -->
@@ -465,12 +473,26 @@ sections.forEach(section => {
       });
     });
 
-    // Contact form validation
-    document.getElementById("contactForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      alert("Message sent successfully!");
-      this.reset();
-    });
+    // Contact form validationdocument.getElementById("contactForm").addEventListener("submit", function(e) {
+  e.preventDefault(); // prevent default page reload
+
+  const form = this;
+  const data = new FormData(form);
+
+  fetch(form.action, {
+    method: "POST",
+    body: data
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert("Message sent successfully!");
+    form.reset();
+  })
+  .catch(err => {
+    console.error(err);
+    alert("There was an error sending your message.");
+  });
+
   </script>
 </body>
 </html>
