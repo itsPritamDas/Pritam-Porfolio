@@ -420,12 +420,14 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
-  // Fix: Check if already visible at load
+ // Fix: Check if already visible at load
+sections.forEach(section => {
   const rect = section.getBoundingClientRect();
   if (rect.top < window.innerHeight && rect.bottom >= 0) {
     section.classList.add("visible");
-  };
+  }
+});
+
 
     // Navbar scroll effect
     window.addEventListener("scroll", () => {
