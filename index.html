@@ -7,16 +7,15 @@
   <style>
     /* Reset */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: #fff;
-      line-height: 1.6;
-      scroll-behavior: smooth;
-      opacity: 0;
-      transition: opacity 1s ease-in;
-    }
-    body.loaded { opacity: 1; }
+   body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  color: #fff;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+  opacity: 1;   /* Always visible now */
+}
+
 
     a { text-decoration: none; color: inherit; }
     h1, h2, h3 { margin-bottom: 10px; }
@@ -385,16 +384,30 @@ provides practical experience with JavaScript event handling and error managemen
   <!-- JS -->
   <script>
     // Page load transition
-    window.addEventListener("load", () => {
-      document.body.classList.add("loaded");
-    });
+    document.addEventListener("DOMContentLoaded", () => {
+  document.body.classList.add("loaded");
+});
+
 
     // Section reveal animations
     const sections = document.querySelectorAll("section");
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add("visible"); });
-    }, { threshold: 0.2 });
-    sections.forEach(section => observer.observe(section));
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+    }
+  });
+}, { threshold: 0.2 });
+
+sections.forEach(section => {
+  observer.observe(section);
+
+  // Fix: Check if already visible at load
+  const rect = section.getBoundingClientRect();
+  if (rect.top < window.innerHeight && rect.bottom >= 0) {
+    section.classList.add("visible");
+  }
+});
 
     // Navbar scroll effect
     window.addEventListener("scroll", () => {
@@ -441,5 +454,4 @@ provides practical experience with JavaScript event handling and error managemen
   </script>
 </body>
 </html>
-
 
