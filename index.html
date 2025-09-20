@@ -201,6 +201,13 @@
       nav ul li { margin: 12px 0; }
       .menu-toggle { display: block; }
     }
+
+
+    #projects {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
   </style>
 </head>
 <body>
@@ -335,6 +342,7 @@ improving communication between students and teachers.</p>
     <br>
     <br>
     <div class="project-card">
+      <img src="CALC.png" alt="Basic-Calculator "><br>
       <h3> Basic Calculator</h3>
       <p>The goal of this project is to create a fully functional calculator using web technologies—
  HTML, CSS, and JavaScript. The calculator performs basic arithmetic operations . This project helps enhance front-end development skills and 
@@ -389,8 +397,8 @@ provides practical experience with JavaScript event handling and error managemen
 });
 
 
-    // Section reveal animations
-    const sections = document.querySelectorAll("section");
+   // Section reveal animations
+const sections = document.querySelectorAll("section");
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -399,15 +407,25 @@ const observer = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.2 });
 
-sections.forEach(section => {
-  observer.observe(section);
+// Observe all sections
+sections.forEach(section => observer.observe(section));
+
+// 🔥 Fix: Immediately mark sections visible if already in viewport on load
+window.addEventListener("DOMContentLoaded", () => {
+  sections.forEach(section => {
+    const rect = section.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom >= 0) {
+      section.classList.add("visible");
+    }
+  });
+});
+
 
   // Fix: Check if already visible at load
   const rect = section.getBoundingClientRect();
   if (rect.top < window.innerHeight && rect.bottom >= 0) {
     section.classList.add("visible");
-  }
-});
+  };
 
     // Navbar scroll effect
     window.addEventListener("scroll", () => {
@@ -454,4 +472,3 @@ sections.forEach(section => {
   </script>
 </body>
 </html>
-
